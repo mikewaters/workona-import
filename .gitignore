@@ -1,0 +1,6 @@
+__pycache__
+.env
+.vscode
+*.code-workspace
+test/output/*
+bookmarks.html

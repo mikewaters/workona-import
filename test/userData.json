@@ -1,0 +1,105 @@
+{
+    "User": {
+        "uploadedAvatar": null,
+        "email": "mike@mike.net",
+        "name": null,
+        "updatedAt": 1641229962848,
+        "createdAt": 1635037038425,
+        "id": "xyz",
+        "orgId": "xyz",
+        "domain": "mike.net",
+        "avatar": null
+    },
+    "Workspaces": [
+        {
+            "title": "Title One",
+            "tabs": [
+                {
+                    "title": "How to Use Workona | Workona Help Center",
+                    "url": "https://workona.com/help/how-to-use-workona/"
+                },
+                {
+                    "title": "workona at DuckDuckGo",
+                    "url": "https://duckduckgo.com/?t=ffab&q=workona&ia=web"
+                },
+                {
+                    "title": "Admin Dashboard - Workona",
+                    "url": "https://workona.com/admin/dashboard/"
+                }
+            ],
+            "resources": [],
+            "notes": [
+                {
+                    "title": "Test",
+                    "description": {
+                        "isNoteContent": true,
+                        "lines": [
+                            "testing"
+                        ]
+                    },
+                    "attachments": []
+                },
+                {
+                    "title": "",
+                    "description": null,
+                    "attachments": []
+                }
+            ],
+            "tasks": []
+        },
+        {
+            "title": "Title Two",
+            "tabs": [],
+            "resources": [],
+            "notes": [
+                {
+                    "title": "",
+                    "description": null,
+                    "attachments": []
+                }
+            ],
+            "tasks": []
+        },
+        {
+            "title": "Test Workspace",
+            "tabs": [
+                {
+                    "title": "Yahoo!",
+                    "url": "https://yahoo.com"
+                },
+                {
+                    "title": "Google",
+                    "url": "https://google.com"
+                },
+                {
+                    "title": "Note: <-- this colon breaks yaml parsers",
+                    "url": "https://stackoverflow.com/questions/19109912/yaml-do-i-need-quotes-for-strings-in-yaml"
+                }
+            ],
+            "resources": [],
+            "notes": [
+                {
+                    "title": "",
+                    "description": null,
+                    "attachments": []
+                }
+            ],
+            "tasks": []
+        }
+    ],
+    "My Tasks": {
+        "Today": [
+            {
+                "title": "Task one",
+                "description": null,
+                "attachments": [
+                    {
+                        "title": "test",
+                        "url": "https://google.com"
+                    }
+                ]
+            }
+        ],
+        "Soon": []
+    }
+}

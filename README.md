@@ -8,6 +8,7 @@ For me, I wanted to copy my tabs over to a new user.  Their sharing functionalit
 # Install
 Create a virtual environment and install the requirements:
 
+    
     python -m venv .env
     . .env/bin/activate
     pip install -r requirements.txt
@@ -31,6 +32,17 @@ To import your bookmarks into Chrome, you can just go to [the following url](chr
 
     chrome://settings/importData
 
+# Notes
+In the code, I make sp=ome references to JSON array ordering; here is the data:
+
+JSON spec: https://www.ecma-international.org/wp-content/uploads/ECMA-404_2nd_edition_december_2017.pdf
+
+In section 7 (Arrays, pg 10) it states the following:
+
+An array structure is a pair of square bracket tokens surrounding zero or more values. The values are
+separated by commas. The JSON syntax does not define any specific meaning to the ordering of the values.
+However, the JSON array structure is often used in situations where there is some semantics to the ordering. 
+There is some followup discission [here](https://stackoverflow.com/questions/7214293/is-the-order-of-elements-in-a-json-list-preserved).
 # References
 
 1: http://fileformats.archiveteam.org/wiki/Netscape_bookmarks

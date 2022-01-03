@@ -1,3 +1,9 @@
+"""
+This is a bunch of code for interfacing with Workona export files.
+1. PyYAML componentry for fixing the quoting defects, for Workona workspaces that 
+contain yaml control characters in their names (easy ones, like ':').
+2. Function for exporting Workona export data (sourced via JSON or YAML) to non-Workona systems.
+"""
 import yaml
 from copy import copy
 from functools import partial

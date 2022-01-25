@@ -6,9 +6,9 @@ from workona import yaml_load, make_bookmarks
 
 @click.command(help="Generate a Chrome-compatible bookmarks.html file from a Workona export.")
 @click.argument('inputfile', type=click.Path(exists=True))
-@click.option('-w', '--workspaces', multiple=True)
+@click.option('-s', '--sections', multiple=True)
 @click.option('-o', '--outputfile', default='bookmarks.html')
-def generate_bookmarks(inputfile, workspaces, outputfile):
+def generate_bookmarks(inputfile, sections, outputfile):
     """Operate on INPUTFILE, optionally filtering for WORKSPACES."""
     with open(inputfile, 'rb') as fh:
         rawdata = fh.read()
@@ -20,7 +20,7 @@ def generate_bookmarks(inputfile, workspaces, outputfile):
     else:
         raise Exception("Expecting yaml or json Workona export files")
     
-    output = make_bookmarks(data, workspaces=workspaces)
+    output = make_bookmarks(data, filter_sections=sections)
     
     with open(outputfile, 'w') as fh:
         fh.write(output)

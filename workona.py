@@ -203,13 +203,13 @@ def yaml_load(data):
     """
     return yaml.load(data, Loader=partial(WorkonaExportLoader, buffer_sz=4096))
 
-def make_bookmarks(data, workspaces=None, wrapped=True):
+def make_bookmarks(data, filter_sections=None, wrapped=True):
     """Generate quick-and-dirty chrome-compatible bookmark import text.
 
     :param data: dictionary representation of an entire Workona export file
     :type data: dict
-    :param workspaces: 'titles' of workspaces that you want to see in output exclusively
-    :type workspaces: list
+    :param filter_sections: 'titles' of sections that you want to see in output exclusively
+    :type filter_sections: list
     :param wrapped: whether to wrap all bookmarks in a top-level "Workona Export" folder
     :type wrapped: bool
     :return: bookmarks document html data
@@ -252,19 +252,17 @@ def make_bookmarks(data, workspaces=None, wrapped=True):
     wrapper = "Workona Export"
     filtered = {}
 
-    if workspaces:
-        filtered = {'Workspaces': {}}
-        seq = 0
-        for widx, wvalue in enumerate(data['Workspaces']):
-            if widx == wvalue:
-                # yaml source
-                workspace = data['Workspaces'][wvalue]
-            else:
-                workspace = wvalue
+    for widx, wvalue in enumerate(data['Workspaces']):
+        if widx == wvalue:
+            # yaml source
+            raise NotImplementedError('`text` export structure has changed and is unsupported; use `json`')
+    
+    if filter_sections:
+        filtered = {'Workspaces': []}
+        for section in data['Workspaces']:
             
-            if workspace['title'] in workspaces:
-                filtered['Workspaces'][seq] = copy(workspace)
-                seq += 1
+            if section['title'] in filter_sections:
+                filtered['Workspaces'].append(copy(section))
 
         data = filtered
 
@@ -276,33 +274,45 @@ def make_bookmarks(data, workspaces=None, wrapped=True):
 
     if wrapped: output.append(f"<DT><H3 FOLDED>{wrapper}</H3>\n<DL>")
 
-    for widx, wvalue in enumerate(data['Workspaces']):
-        if widx == wvalue:
-            # we have yaml source
-            workspace = data['Workspaces'][wvalue]
-        else:
-            workspace = wvalue
+    def sections_out(sections):
+        for section in sections:
 
-        title = workspace['title']
+            title = section['title']
 
-        output.append(f"\t<DT><H3 FOLDED>{title}</H3>")
-        output.append("\t\t<DL><p>")
+            output.append(f"\t<DT><H3 FOLDED>{title}</H3>")
+            output.append("\t\t<DL><p>")
 
-        if 'tabs' in workspace:
-            for tidx, tvalue in enumerate(workspace['tabs']):
-                if tidx == tvalue:
-                    # again, yaml
-                    tab = workspace['tabs'][tidx]
-                else:
-                    tab = tvalue
+            if 'workspaces' in section:
+                workspaces_out(section['workspaces'])
 
-                url = tab['url']
-                desc = tab.get('title', url)
+            output.append("\t\t</DL>")
+            output.append("\t</DT>")
 
-                output.append(f'\t\t\t<DT><A HREF="{url}">{desc}</a>')
+    def tabs_out(workspace):
+        for tab in workspace['tabs']:
 
-        output.append("\t\t</DL>")
-        output.append("\t</DT>")
+            url = tab['url']
+            desc = tab.get('title', url)
+
+            output.append(f'\t\t\t\t<DT><A HREF="{url}">{desc}</a>')
+
+    def workspaces_out(workspaces):
+
+        for workspace in workspaces:
+
+            title = workspace['title']
+
+            output.append(f"\t\t<DT><H3 FOLDED>{title}</H3>")
+            output.append("\t\t\t<DL><p>")
+
+            if 'tabs' in workspace:
+                tabs_out(workspace)
+
+            output.append("\t\t\t</DL>")
+            output.append("\t\t</DT>")
+
+    #workspaces_out(data['Workspaces'])
+    sections_out(data['Workspaces'])
 
     if wrapped: output.append(f"</DL></DT>")
 
